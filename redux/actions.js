@@ -16,6 +16,21 @@ export const actions = {
   removeProject: (id) => ({
     type: actionTypes.PROJECT_REMOVED,
     payload: { id }
+  }),
+
+  addNote: (projectId, noteId) => ({
+    type: actionTypes.NOTE_ADDED,
+    payload: { projectId, noteId }
+  }),
+
+  noteEdited: (projectId, noteId, note) => ({
+    type: actionTypes.NOTE_EDITED,
+    payload: { projectId, noteId, note }
+  }),
+
+  removeNote: (projectId, noteId) => ({
+    type: actionTypes.NOTE_REMOVED,
+    payload: { projectId, noteId }
   })
 
 }
