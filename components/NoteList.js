@@ -1,19 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
-import { StyleSheet, Text, View, SwipeableFlatList, TouchableOpacity } from 'react-native';
-
-const styles = StyleSheet.create({
-  project: {
-    backgroundColor: 'white',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: 'gray',
-    paddingVertical: 20,
-    paddingHorizontal: 15
-  },
-  name: {
-    fontSize: 16
-  }
-})
+import { Alert, Text, View, SwipeableFlatList, TouchableOpacity } from 'react-native';
+import { NoteListItem } from "./NoteListItem";
 
 const DeleteButton = ({ onPress }) => (
     <View style={{ flex: 1, alignItems: 'flex-end' }}>
@@ -30,16 +18,23 @@ export class NoteList extends Component {
     onNavigateNote: PropTypes.func
   }
 
+  removeNote = noteId => {
+    Alert.alert(
+      'Remove Note',
+      'Do you want to remove note ?',
+      [
+        { text: 'Cancel', onPress: () => {}},
+        { text: 'Remove', onPress: () => this.props.onRemoveNote(noteId) }
+      ]
+    )
+  }
+
   renderDeleteButton = ({ item }) => (
-    <DeleteButton onPress={() => this.props.onRemoveNote(item.id)} />
+    <DeleteButton onPress={() => this.removeNote(item.id)} />
   )
 
   renderItem = ({ item }) => (
-    <View style={styles.project}>
-      <Text style={styles.name}>{item.userName}</Text>
-      <Text style={styles.name}>{item.editTime}</Text>
-      <Text style={styles.name}>{item.text}</Text>
-    </View>
+    <NoteListItem note={item} />
   )
 
   render() {
