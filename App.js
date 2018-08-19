@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { createStackNavigator } from 'react-navigation'
 import { Provider } from 'react-redux'
-import List from './components/List'
-import Project from './components/Project'
-import { Note } from './components/Note'
+import Projects from './containers/Projects'
+import Project from './containers/Project'
+import Note from './containers/Note'
 import { store } from './redux/store'
 
 const RootStack = createStackNavigator({
-  List: {
-    screen: List
+  Projects: {
+    screen: Projects
   },
   Project: {
     screen: Project

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { StyleSheet, FlatList, TouchableOpacity, Text, View } from 'react-native';
-import { connect } from 'react-redux'
 
 const styles = StyleSheet.create({
   project: {
@@ -15,9 +14,9 @@ const styles = StyleSheet.create({
   }
 })
 
-export class List extends Component {
-  renderItem = ({ item, index }) => (
-    <TouchableOpacity key={item.name} onPress={() => this.props.navigation.navigate('Project', { index })}>
+export class ProjectList extends Component {
+  renderItem = ({ item }) => (
+    <TouchableOpacity onPress={() => this.props.onNavigateProject(item.id, item.name)}>
       <View style={styles.project} >
         <Text style={styles.name}>{item.name}</Text>
       </View>
@@ -25,19 +24,13 @@ export class List extends Component {
   )
 
   render() {
-    const { list, navigation } = this.props
+    const { projects } = this.props
     return (
       <FlatList
-        data={list}
-        keyExtractor={item => item.name}
+        data={projects}
+        keyExtractor={item => item.id}
         renderItem={this.renderItem}
       />
     )
   }
 }
-
-export default connect(
-  state => ({
-    list: state
-  })
-)(List)

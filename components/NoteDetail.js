@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-export class Note extends Component {
+export class NoteDetail extends Component {
 
   render() {
     return (
