@@ -27,7 +27,7 @@ export class Note extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   const { noteId, projectId } = ownProps.navigation.state.params
-  const project = state.find(project => project.id === projectId)
+  const project = state.projects.find(project => project.id === projectId)
   const note = project.notes.find(note => note.id === noteId)
 
   return {
