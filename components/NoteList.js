@@ -1,15 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
-import { Alert, Text, View, SwipeableFlatList, TouchableOpacity } from 'react-native';
-import { NoteListItem } from "./NoteListItem";
-
-const DeleteButton = ({ onPress }) => (
-    <View style={{ flex: 1, alignItems: 'flex-end' }}>
-      <TouchableOpacity style={{ width: 60, height: '100%', alignItems: 'center', justifyContent: 'center' }} onPress={onPress}>
-        <Text style={{ color: 'red' }}>{'X'}</Text>
-      </TouchableOpacity>
-    </View>
-)
+import { Alert, View, SwipeableFlatList } from 'react-native';
+import { NoteListItem } from './NoteListItem'
+import { RemoveButton } from './Buttons'
 
 export class NoteList extends Component {
   static propTypes = {
@@ -30,12 +23,17 @@ export class NoteList extends Component {
   }
 
   renderDeleteButton = ({ item }) => (
-    <DeleteButton onPress={() => this.removeNote(item.id)} />
+    <View style={{ flex: 1, alignItems: 'flex-end' }}>
+      <RemoveButton onPress={() => this.removeNote(item.id)} />
+    </View>
   )
 
-  renderItem = ({ item }) => (
-    <NoteListItem note={item} />
-  )
+  renderItem = ({ item }) => {
+    const { onNavigateNote } = this.props
+    return (
+      <NoteListItem note={item} onNavigateNote={onNavigateNote} onRemoveNote={this.removeNote} />
+    )
+  }
 
   render() {
     const { notes } = this.props

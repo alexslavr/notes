@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
-import { StyleSheet, Image, Text, View } from 'react-native';
+import { StyleSheet, Image, Text, View, UIManager, findNodeHandle } from 'react-native';
+import { MoreButton } from './Buttons'
 
 const styles = StyleSheet.create({
   note: {
@@ -30,6 +31,15 @@ const styles = StyleSheet.create({
 
   name: {
     fontSize: 16
+  },
+
+  button: {
+    position: 'absolute',
+    right: 0,
+    top: 20,
+    width: 30,
+    height: 30,
+    justifyContent: 'center'
   }
 })
 
@@ -43,7 +53,26 @@ export class NoteListItem extends Component {
     }),
 
     onRemoveNote: PropTypes.func,
-    onNavigateNote: PropTypes.func
+    onNavigateNote: PropTypes.func,
+  }
+
+  onPressMenu = (e, index) => {
+    const { note, onNavigateNote, onRemoveNote } = this.props
+    switch (index) {
+      case 0:
+        return onNavigateNote(note.id)
+      case 1:
+        return onRemoveNote(note.id)
+    }
+  }
+
+  onOpenMenu = () => {
+    UIManager.showPopupMenu(
+      findNodeHandle(this._buttonRef),
+      [ 'Edit', 'Delete' ],
+      (e) => console.error(e),
+      this.onPressMenu
+    )
   }
 
   render() {
@@ -59,6 +88,7 @@ export class NoteListItem extends Component {
           </View>
         </View>
         <Text style={styles.name}>{text}</Text>
+        <MoreButton ref={ref => this._buttonRef = ref} style={styles.button} onPress={this.onOpenMenu} />
       </View>
     )
   }
