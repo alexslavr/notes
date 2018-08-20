@@ -7,16 +7,24 @@ import Note from './containers/Note'
 import { store } from './redux/store'
 
 const RootStack = createStackNavigator({
-  Projects: {
-    screen: Projects
+    Projects: {
+      screen: Projects
+    },
+    Project: {
+      screen: Project
+    },
+    Note: {
+      screen: Note
+    }
   },
-  Project: {
-    screen: Project
-  },
-  Note: {
-    screen: Note
-  }
-})
+  {
+    navigationOptions: {
+      headerStyle: {
+        backgroundColor: '#f4511e',
+      },
+      headerTintColor: '#fff'
+    }
+  })
 
 export default class App extends Component {
   render() {
