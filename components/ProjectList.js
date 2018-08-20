@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: 'gray',
-    paddingVertical: 20,
+    paddingVertical: 30,
     paddingHorizontal: 15
   },
   name: {

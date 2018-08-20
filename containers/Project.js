@@ -1,13 +1,21 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { NoteList } from '../components/NoteList'
+import { AddButton } from '../components/Buttons'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actions } from '../redux/actions'
 
 export class Project extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: navigation.getParam('name', '')
+    title: navigation.getParam('name', ''),
+    headerRight: (
+      <AddButton onPress={navigation.getParam('onRightButtonPress')} />
+    )
   })
+
+  addNote = () => {
+    this.props.addNote()
+  }
 
   removeNote = noteId => {
     const { projectId, removeNote } = this.props
@@ -17,6 +25,10 @@ export class Project extends Component {
   navigateNote = noteId => {
     const { projectId, navigation } = this.props
     navigation.navigate('Note', { noteId, projectId })
+  }
+
+  componentDidMount() {
+    this.props.navigation.setParams({ onRightButtonPress: this.addNote })
   }
 
   render() {
