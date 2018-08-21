@@ -12,16 +12,16 @@ export class Projects extends Component {
     )
   })
 
-  addProject = () => {
-    this.props.addProject()
+  navigateNewProject = () => {
+    this.props.navigation.navigate('Project')
   }
 
-  navigateProject = (projectId, name) => {
+  navigateExistingProject = (projectId, name) => {
     this.props.navigation.navigate('Project', { projectId, name })
   }
 
   componentDidMount() {
-    this.props.navigation.setParams({ onRightButtonPress: this.addProject })
+    this.props.navigation.setParams({ onRightButtonPress: this.navigateNewProject })
   }
 
   render() {
@@ -29,8 +29,7 @@ export class Projects extends Component {
     return (
       <ProjectList
         projects={projects}
-        onAddProject={this.addProject}
-        onNavigateProject={this.navigateProject}
+        onPressProject={this.navigateExistingProject}
       />
     )
   }
