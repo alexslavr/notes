@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+import shortid from 'shortid'
 import { NoteList } from '../components/NoteList'
 import { AddButton } from '../components/Buttons'
+import { ProjectNameInput } from "../components/ProjectNameInput";
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actions } from '../redux/actions'
@@ -27,12 +29,23 @@ export class Project extends Component {
     navigation.navigate('Note', { noteId, projectId })
   }
 
+  createProject = name => {
+    const newProjectId = shortid.generate()
+    this.props.navigation.setParams({ projectId: newProjectId, name })
+    this.props.addProject(newProjectId, name)
+  }
+
   componentDidMount() {
     this.props.navigation.setParams({ onRightButtonPress: this.addNote })
   }
 
   render() {
-    const { project } = this.props
+    const { projectId, project } = this.props
+
+    if (!projectId || !project) {
+      return (<ProjectNameInput onSubmitEditing={this.createProject} />)
+    }
+
     return (
       <NoteList
         notes={project.notes}
@@ -44,8 +57,13 @@ export class Project extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { projectId } = ownProps.navigation.state.params
-  const project = state.projects.find(project => projectId === project.id)
+  const projectId = ownProps.navigation.getParam('projectId', null)
+
+  let project = null
+  if (projectId) {
+    project = state.projects.find(project => projectId === project.id)
+  }
+
   return {
     projectId,
     project

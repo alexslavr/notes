@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 
 export class ProjectList extends Component {
   renderItem = ({ item }) => (
-    <TouchableOpacity onPress={() => this.props.onNavigateProject(item.id, item.name)}>
+    <TouchableOpacity onPress={() => this.props.onPressProject(item.id, item.name)}>
       <View style={styles.project} >
         <Text style={styles.name}>{item.name}</Text>
       </View>
