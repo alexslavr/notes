@@ -9,7 +9,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: 'gray',
     paddingVertical: 20,
-    paddingHorizontal: 15
+    paddingHorizontal: 15,
+    maxHeight: 150
   },
 
   title: {

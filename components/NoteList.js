@@ -41,6 +41,7 @@ export class NoteList extends Component {
     return (
       <SwipeableFlatList
         data={notes}
+        bounceFirstRowOnMount={false}
         keyExtractor={item => item.id}
         maxSwipeDistance={60}
         renderQuickActions={this.renderDeleteButton}
