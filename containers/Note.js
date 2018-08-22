@@ -5,8 +5,9 @@ import { bindActionCreators } from 'redux'
 import { actions } from '../redux/actions'
 
 export class Note extends Component {
-  editNote = (noteId, text) => {
-    this.props.editNote(noteId, text)
+  editNote = text => {
+    const { projectId, note, editNote } = this.props
+    editNote(projectId, note.id, text)
   }
 
   goBack = () => {

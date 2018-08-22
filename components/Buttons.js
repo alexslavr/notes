@@ -14,6 +14,15 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+
+  saveButton: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#f4511e',
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 })
 
@@ -55,6 +64,17 @@ export class RemoveButton extends Component {
     return (
       <Button style={styles.removeButton} onPress={onPress}>
         <Icon name="md-trash" size={32} color='red' />
+      </Button>
+    )
+  }
+}
+
+export class SaveButton extends Component {
+  render() {
+    const { style, onPress } = this.props
+    return (
+      <Button style={[styles.saveButton, style]} onPress={onPress}>
+        <Icon name="md-checkmark" size={32} color={'white'} />
       </Button>
     )
   }
