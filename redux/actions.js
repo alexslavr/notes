@@ -1,3 +1,8 @@
+const currentUser = {
+  userName: 'Alex Lavrov',
+  avatar: require('../images/avatar.jpeg'),
+}
+
 export const actionTypes = {
   PROJECT_ADDED: 'PROJECT_ADDED',
   PROJECT_REMOVED: 'PROJECT_REMOVED',
@@ -18,14 +23,32 @@ export const actions = {
     payload: { id }
   }),
 
-  addNote: (projectId, noteId) => ({
+  addNote: (projectId, noteId, text = '') => ({
     type: actionTypes.NOTE_ADDED,
-    payload: { projectId, noteId }
+    payload: {
+      projectId,
+      note: {
+        id: noteId,
+        userName: currentUser.userName,
+        avatar: currentUser.avatar,
+        editTime: new Date().toDateString(),
+        text
+      }
+    }
   }),
 
-  noteEdited: (projectId, noteId, note) => ({
+  editNote: (projectId, noteId, text) => ({
     type: actionTypes.NOTE_EDITED,
-    payload: { projectId, noteId, note }
+    payload: {
+      projectId,
+      note: {
+        id: noteId,
+        userName: currentUser.userName,
+        avatar: currentUser.avatar,
+        editTime: new Date().toDateString(),
+        text
+      }
+    }
   }),
 
   removeNote: (projectId, noteId) => ({

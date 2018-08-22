@@ -7,65 +7,37 @@ export const initialState = {
   projects: [
     {
       id: 'project_1',
-      name: 'Project 1',
+      name: 'Project #1',
       notes: [
         {
           id: '1',
           userName: 'Alex',
           avatar: userAvatar,
           editTime: '11-11-2011',
-          text: 'asdfdasfsadf sadfsadf asdfsad sadfas'
+          text: 'Some text here'
         },
         {
           id: '2',
           userName: 'Alex',
           avatar: userAvatar,
           editTime: '11-11-2011',
-          text: 'asdfdasfsadf sadfsadf asdfsad sadfas'
+          text: 'Test \n\n text \n\n here'
         },
         {
           id: '3',
           userName: 'Alex',
           avatar: userAvatar,
           editTime: '11-11-2011',
-          text: 'asdfdasfsadf sadfsadf asdfsad sadfas'
-        },
-        {
-          id: '4',
-          userName: 'Alex',
-          avatar: userAvatar,
-          editTime: '11-11-2011',
-          text: 'asdfdasfsadf sadfsadf asdfsad sadfas'
+          text: 'Test text Test textTest textTest textTest textTest textTest textTest textTest textTest textTest text'
         }
       ]
     },
     {
       id: 'project_2',
-      name: 'Project 2',
+      name: 'Second Project',
       notes: [
         {
           id: '1',
-          userName: 'Alex',
-          avatar: userAvatar,
-          editTime: '11-11-2011',
-          text: 'asdfdasfsadf sadfsadf asdfsad sadfas'
-        },
-        {
-          id: '2',
-          userName: 'Alex',
-          avatar: userAvatar,
-          editTime: '11-11-2011',
-          text: 'asdfdasfsadf sadfsadf asdfsad sadfas'
-        },
-        {
-          id: '3',
-          userName: 'Alex',
-          avatar: userAvatar,
-          editTime: '11-11-2011',
-          text: 'asdfdasfsadf sadfsadf asdfsad sadfas'
-        },
-        {
-          id: '4',
           userName: 'Alex',
           avatar: userAvatar,
           editTime: '11-11-2011',
