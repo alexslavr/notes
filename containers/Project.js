@@ -16,7 +16,8 @@ export class Project extends Component {
   })
 
   addNote = () => {
-    this.props.addNote()
+    const { projectId, addNote } = this.props
+    addNote(projectId, shortid.generate())
   }
 
   removeNote = noteId => {
