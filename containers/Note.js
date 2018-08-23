@@ -1,26 +1,47 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
+import { Keyboard } from 'react-native'
 import { NoteDetail } from '../components/NoteDetail'
+import { SaveButton } from '../components/Buttons'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actions } from '../redux/actions'
 
-export class Note extends Component {
-  editNote = text => {
-    const { projectId, note, editNote } = this.props
-    editNote(projectId, note.id, text)
+export class Note extends PureComponent {
+  static navigationOptions = ({ navigation }) => ({
+    title: navigation.getParam('name', ''),
+    headerRight: (
+      <SaveButton onPress={navigation.getParam('onSaveButtonPress')} />
+    )
+  })
+
+  state = {
+    noteText: ''
   }
 
-  goBack = () => {
-    this.props.navigation.goBack()
+  componentDidMount() {
+    this.props.navigation.setParams({ onSaveButtonPress: this.onSaveNote })
+  }
+
+  onSaveNote = () => {
+    const { projectId, note, editNote } = this.props
+    const { noteText } = this.state
+
+    if (noteText && noteText !== note.text) {
+      editNote(projectId, note.id, noteText)
+    }
+    Keyboard.dismiss()
+  }
+
+  onChangeNote = noteText => {
+    this.setState({ noteText })
   }
 
   render() {
-    const { note } = this.props
+    const noteText = this.state.noteText || this.props.note.text
     return (
       <NoteDetail
-        note={note}
-        onEditNote={this.editNote}
-        onGoBack={this.goBack}
+        noteText={noteText}
+        onChangeNoteText={this.onChangeNote}
       />
     )
   }

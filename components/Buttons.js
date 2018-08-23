@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Icon from '@expo/vector-icons/Ionicons'
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 
 const styles = StyleSheet.create({
-  addButton: {
+  headerButton: {
     height: '100%',
     paddingHorizontal: 15,
     justifyContent: 'center'
@@ -26,56 +26,66 @@ const styles = StyleSheet.create({
   }
 })
 
-export class Button extends Component {
+export class IconButton extends PureComponent {
   render() {
-    const { children, style, onPress } = this.props
+    const { iconName, size = 32, color, style, onPress } = this.props
     return (
       <TouchableOpacity style={style} activeOpacity={0.8} onPress={onPress}>
-        {children}
+        <Icon name={iconName} size={size} color={color} />
       </TouchableOpacity>
     )
   }
 }
 
-export class AddButton extends Component {
+export class AddButton extends PureComponent {
   render() {
     return (
-      <Button style={styles.addButton} onPress={this.props.onPress}>
-        <Icon name="md-add" size={32} color='white' />
-      </Button>
+      <IconButton
+        style={styles.headerButton}
+        iconName="md-add"
+        color="white"
+        onPress={this.props.onPress}
+      />
     )
   }
 }
 
-export class MoreButton extends Component {
+export class SaveButton extends PureComponent {
   render() {
-    const { style, onPress } = this.props
     return (
-      <Button style={style} onPress={onPress}>
-        <Icon name="md-more" size={32} color='black' />
-      </Button>
+      <IconButton
+        style={styles.headerButton}
+        iconName="md-checkmark"
+        color="white"
+        onPress={this.props.onPress}
+      />
     )
   }
 }
 
-export class RemoveButton extends Component {
+export class MoreButton extends PureComponent {
   render() {
     const { style, onPress } = this.props
     return (
-      <Button style={styles.removeButton} onPress={onPress}>
-        <Icon name="md-trash" size={32} color='red' />
-      </Button>
+      <IconButton
+        style={style}
+        iconName="md-more"
+        color="black"
+        onPress={onPress}
+      />
     )
   }
 }
 
-export class SaveButton extends Component {
+export class RemoveButton extends PureComponent {
   render() {
-    const { style, onPress } = this.props
     return (
-      <Button style={[styles.saveButton, style]} onPress={onPress}>
-        <Icon name="md-checkmark" size={32} color={'white'} />
-      </Button>
+      <IconButton
+        style={styles.removeButton}
+        iconName="md-trash"
+        color="red"
+        onPress={this.props.onPress}
+      />
     )
   }
 }
