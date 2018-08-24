@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { ProjectList } from '../components/ProjectList'
 import { AddButton } from '../components/Buttons'
 import { connect } from 'react-redux'
@@ -12,6 +12,10 @@ export class Projects extends Component {
     )
   })
 
+  componentDidMount() {
+    this.props.navigation.setParams({ onRightButtonPress: this.navigateNewProject })
+  }
+
   navigateNewProject = () => {
     this.props.navigation.navigate('Project')
   }
@@ -20,15 +24,10 @@ export class Projects extends Component {
     this.props.navigation.navigate('Project', { projectId, name })
   }
 
-  componentDidMount() {
-    this.props.navigation.setParams({ onRightButtonPress: this.navigateNewProject })
-  }
-
   render() {
-    const { projects } = this.props
     return (
       <ProjectList
-        projects={projects}
+        projects={this.props.projects}
         onPressProject={this.navigateExistingProject}
       />
     )

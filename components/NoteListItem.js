@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
-import { StyleSheet, Image, Text, View, UIManager, findNodeHandle } from 'react-native';
+import { StyleSheet, Image, Text, View, Platform, ActionSheetIOS, UIManager, findNodeHandle } from 'react-native';
 import { MoreButton } from './Buttons'
 
 const styles = StyleSheet.create({
@@ -57,7 +57,7 @@ export class NoteListItem extends Component {
     onNavigateNote: PropTypes.func,
   }
 
-  onPressMenu = (e, index) => {
+  onPressMenu = index => {
     const { note, onNavigateNote, onRemoveNote } = this.props
     switch (index) {
       case 0:
@@ -68,12 +68,13 @@ export class NoteListItem extends Component {
   }
 
   onOpenMenu = () => {
-    UIManager.showPopupMenu(
-      findNodeHandle(this._buttonRef),
-      [ 'Edit', 'Delete' ],
-      (e) => console.error(e),
-      this.onPressMenu
-    )
+    const button = findNodeHandle(this._buttonRef)
+    const options = [ 'Edit', 'Delete' ]
+
+    Platform.select({
+      ios: ActionSheetIOS.showActionSheetWithOptions(options, this.onPressMenu),
+      android: UIManager.showPopupMenu(button, options, (e) => console.error(e), (e, i) => this.onPressMenu(i))
+    })
   }
 
   render() {

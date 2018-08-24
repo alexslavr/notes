@@ -1,0 +1,1 @@
+export const MAX_SWIPE_DISTANCE = 60

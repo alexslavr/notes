@@ -1,33 +1,48 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { StyleSheet, FlatList, TouchableOpacity, Text, View } from 'react-native';
 
 const styles = StyleSheet.create({
   project: {
     backgroundColor: 'white',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: 'gray',
     paddingVertical: 30,
-    paddingHorizontal: 15
+    paddingHorizontal: 15,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: 'gray'
   },
   name: {
     fontSize: 16
   }
 })
 
-export class ProjectList extends Component {
+export class ProjectListItem extends PureComponent {
+  onPressProject = () => {
+    const { project, onPressProject } = this.props
+    onPressProject(project)
+  }
+
+  render() {
+    return (
+      <TouchableOpacity onPress={this.onPressProject}>
+        <View style={styles.project}>
+          <Text style={styles.name}>{this.props.project.name}</Text>
+        </View>
+      </TouchableOpacity>
+    )
+  }
+}
+
+export class ProjectList extends PureComponent {
   renderItem = ({ item }) => (
-    <TouchableOpacity onPress={() => this.props.onPressProject(item.id, item.name)}>
-      <View style={styles.project} >
-        <Text style={styles.name}>{item.name}</Text>
-      </View>
-    </TouchableOpacity>
+    <ProjectListItem
+      project={item}
+      onPressProject={this.props.onPressProject}
+    />
   )
 
   render() {
-    const { projects } = this.props
     return (
       <FlatList
-        data={projects}
+        data={this.props.projects}
         keyExtractor={item => item.id}
         renderItem={this.renderItem}
       />

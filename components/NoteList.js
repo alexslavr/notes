@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Alert, View, SwipeableFlatList } from 'react-native';
 import { NoteListItem } from './NoteListItem'
 import { RemoveButton } from './Buttons'
+import { MAX_SWIPE_DISTANCE } from "../constants";
 
 export class NoteList extends Component {
   static propTypes = {
@@ -43,7 +44,7 @@ export class NoteList extends Component {
         data={notes}
         bounceFirstRowOnMount={false}
         keyExtractor={item => item.id}
-        maxSwipeDistance={60}
+        maxSwipeDistance={MAX_SWIPE_DISTANCE}
         renderQuickActions={this.renderDeleteButton}
         renderItem={this.renderItem}
       />
