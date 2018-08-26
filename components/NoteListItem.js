@@ -67,13 +67,21 @@ export class NoteListItem extends Component {
     }
   }
 
-  onOpenMenu = () => {
+  showActionSheet = options => {
+    ActionSheetIOS.showActionSheetWithOptions(options, this.onPressMenu)
+  }
+
+  showPopupMenu = options => {
     const button = findNodeHandle(this._buttonRef)
+    UIManager.showPopupMenu(button, options, (e) => console.error(e), (e, i) => this.onPressMenu(i))
+  }
+
+  onOpenMenu = () => {
     const options = [ 'Edit', 'Delete' ]
 
     Platform.select({
-      ios: ActionSheetIOS.showActionSheetWithOptions(options, this.onPressMenu),
-      android: UIManager.showPopupMenu(button, options, (e) => console.error(e), (e, i) => this.onPressMenu(i))
+      ios: this.showActionSheet(options),
+      android: this.showPopupMenu(options)
     })
   }
 

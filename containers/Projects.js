@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actions } from '../redux/actions'
 
-export class Projects extends Component {
+export class Projects extends PureComponent {
   static navigationOptions = ({ navigation }) => ({
     headerRight: (
       <AddButton onPress={navigation.getParam('onRightButtonPress')} />

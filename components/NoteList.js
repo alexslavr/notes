@@ -12,7 +12,7 @@ export class NoteList extends Component {
     onNavigateNote: PropTypes.func
   }
 
-  removeNote = noteId => {
+  onRemoveNote = noteId => {
     Alert.alert(
       'Remove Note',
       'Do you want to remove note ?',
@@ -25,7 +25,7 @@ export class NoteList extends Component {
 
   renderDeleteButton = ({ item }) => (
     <View style={{ flex: 1, alignItems: 'flex-end' }}>
-      <RemoveButton onPress={() => this.removeNote(item.id)} />
+      <RemoveButton onPress={() => this.onRemoveNote(item.id)} />
     </View>
   )
 
