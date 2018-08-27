@@ -1,37 +1,15 @@
 import React, { PureComponent } from 'react';
-import { StyleSheet, FlatList, TouchableOpacity, Text, View } from 'react-native';
-
-const styles = StyleSheet.create({
-  project: {
-    backgroundColor: 'white',
-    paddingVertical: 30,
-    paddingHorizontal: 15,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: 'gray'
-  },
-  name: {
-    fontSize: 16
-  }
-})
-
-export class ProjectListItem extends PureComponent {
-  onPressProject = () => {
-    const { project, onPressProject } = this.props
-    onPressProject(project)
-  }
-
-  render() {
-    return (
-      <TouchableOpacity onPress={this.onPressProject}>
-        <View style={styles.project}>
-          <Text style={styles.name}>{this.props.project.name}</Text>
-        </View>
-      </TouchableOpacity>
-    )
-  }
-}
+import PropTypes from 'prop-types'
+import { ProjectsType } from './propTypes'
+import { FlatList } from 'react-native';
+import { ProjectListItem } from './ProjectListItem'
 
 export class ProjectList extends PureComponent {
+  static propTypes = {
+    projects: ProjectsType,
+    onPressProject: PropTypes.func
+  }
+
   renderItem = ({ item }) => (
     <ProjectListItem
       project={item}

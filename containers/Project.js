@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import shortid from 'shortid'
 import { NoteList } from '../components/NoteList'
 import { AddButton } from '../components/Buttons'
@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actions } from '../redux/actions'
 
-export class Project extends Component {
+export class Project extends PureComponent {
   static navigationOptions = ({ navigation }) => ({
     title: navigation.getParam('name', ''),
     headerRight: (

@@ -55,7 +55,7 @@ export class SaveButton extends PureComponent {
   }
 }
 
-export class MoreButton extends PureComponent {
+export class MenuButton extends PureComponent {
   render() {
     const { style, onPress } = this.props
     return (

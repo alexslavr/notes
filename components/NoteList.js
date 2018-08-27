@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
+import { NoteType } from './propTypes'
 import { Alert, View, SwipeableFlatList } from 'react-native';
 import { NoteListItem } from './NoteListItem'
 import { RemoveButton } from './Buttons'
@@ -7,7 +8,7 @@ import { MAX_SWIPE_DISTANCE } from "../constants";
 
 export class NoteList extends Component {
   static propTypes = {
-    notes: PropTypes.array,
+    notes: PropTypes.arrayOf(NoteType),
     onRemoveNote: PropTypes.func,
     onNavigateNote: PropTypes.func
   }
@@ -23,7 +24,7 @@ export class NoteList extends Component {
     )
   }
 
-  renderDeleteButton = ({ item }) => (
+  renderQuickActions = ({ item }) => (
     <View style={{ flex: 1, alignItems: 'flex-end' }}>
       <RemoveButton onPress={() => this.onRemoveNote(item.id)} />
     </View>
@@ -32,20 +33,21 @@ export class NoteList extends Component {
   renderItem = ({ item }) => {
     const { onNavigateNote } = this.props
     return (
-      <NoteListItem note={item} onNavigateNote={onNavigateNote} onRemoveNote={this.removeNote} />
+      <NoteListItem
+        note={item}
+        onNavigateNote={onNavigateNote}
+        onRemoveNote={this.onRemoveNote} />
     )
   }
 
   render() {
-    const { notes } = this.props
-
     return (
       <SwipeableFlatList
-        data={notes}
+        data={this.props.notes}
         bounceFirstRowOnMount={false}
         keyExtractor={item => item.id}
         maxSwipeDistance={MAX_SWIPE_DISTANCE}
-        renderQuickActions={this.renderDeleteButton}
+        renderQuickActions={this.renderQuickActions}
         renderItem={this.renderItem}
       />
     )

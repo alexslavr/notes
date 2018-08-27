@@ -6,7 +6,7 @@ import Project from './containers/Project'
 import Note from './containers/Note'
 import { store } from './redux/store'
 
-const RootStack = createStackNavigator({
+const Navigator = createStackNavigator({
     Projects: {
       screen: Projects
     },
@@ -30,7 +30,7 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <RootStack/>
+        <Navigator />
       </Provider>
     )
   }

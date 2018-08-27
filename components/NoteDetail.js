@@ -1,5 +1,6 @@
-import React, { PureComponent } from 'react';
-import { StyleSheet, TextInput, Keyboard, View } from 'react-native';
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
+import { StyleSheet, TextInput, View } from 'react-native'
 
 const styles = StyleSheet.create({
   note: {
@@ -15,36 +16,17 @@ const styles = StyleSheet.create({
 })
 
 export class NoteDetail extends PureComponent {
-  state = {
-    keyboardHeight: 0,
-  }
-
-  componentDidMount () {
-    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow);
-    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide);
-  }
-
-  componentWillUnmount () {
-    this.keyboardDidShowListener.remove();
-    this.keyboardDidHideListener.remove();
-  }
-
-  keyboardDidShow = e => {
-    this.setState({ keyboardHeight: e.endCoordinates.height })
-  }
-
-  keyboardDidHide = () => {
-    this.setState({ keyboardHeight: 0 })
+  static propTypes = {
+    noteText: PropTypes.string,
+    onChangeNoteText: PropTypes.func
   }
 
   render() {
     const { noteText, onChangeNoteText } = this.props
-    const { keyboardHeight } = this.state
-
     return (
       <View style={styles.note}>
         <TextInput
-          style={[styles.noteText, { paddingBottom: keyboardHeight } ]}
+          style={styles.noteText}
           multiline
           value={noteText}
           placeholder="Type note text here ..."

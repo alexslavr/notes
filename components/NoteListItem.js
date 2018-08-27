@@ -1,7 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
-import { StyleSheet, Image, Text, View, Platform, ActionSheetIOS, UIManager, findNodeHandle } from 'react-native';
-import { MoreButton } from './Buttons'
+import { NoteType } from './propTypes'
+import {
+  StyleSheet,
+  Image,
+  Text,
+  View,
+  Platform,
+  ActionSheetIOS,
+  UIManager,
+  findNodeHandle
+} from 'react-native';
+import { MenuButton } from './Buttons'
+import { MAX_NOTE_HEIGHT, NOTE_AVATAR_SIZE } from '../constants'
 
 const styles = StyleSheet.create({
   note: {
@@ -10,7 +21,7 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     paddingVertical: 20,
     paddingHorizontal: 15,
-    maxHeight: 150
+    maxHeight: MAX_NOTE_HEIGHT
   },
 
   title: {
@@ -20,9 +31,9 @@ const styles = StyleSheet.create({
   },
 
   avatar: {
-    width: 50,
-    height: 50,
-    borderRadius: 25
+    width: NOTE_AVATAR_SIZE,
+    height: NOTE_AVATAR_SIZE,
+    borderRadius: NOTE_AVATAR_SIZE / 2
   },
 
   info: {
@@ -46,13 +57,7 @@ const styles = StyleSheet.create({
 
 export class NoteListItem extends Component {
   static propTypes = {
-    note: PropTypes.shape({
-      userName: PropTypes.string,
-      avatar: PropTypes.any,
-      editTime: PropTypes.string,
-      text: PropTypes.string
-    }),
-
+    note: NoteType,
     onRemoveNote: PropTypes.func,
     onNavigateNote: PropTypes.func,
   }
@@ -67,22 +72,30 @@ export class NoteListItem extends Component {
     }
   }
 
-  showActionSheet = options => {
-    ActionSheetIOS.showActionSheetWithOptions({ options, destructiveButtonIndex: 1 }, this.onPressMenu)
+  showActionSheet = () => {
+    ActionSheetIOS.showActionSheetWithOptions({
+        options: [ 'Edit', 'Delete', 'Cancel' ],
+        destructiveButtonIndex: 1,
+        cancelButtonIndex: 2
+      },
+      this.onPressMenu
+    )
   }
 
-  showPopupMenu = options => {
+  showPopupMenu = () => {
     const button = findNodeHandle(this._buttonRef)
-    UIManager.showPopupMenu(button, options, (e) => console.error(e), (e, i) => this.onPressMenu(i))
+    UIManager.showPopupMenu(
+      button,
+      [ 'Edit', 'Delete' ],
+      e => console.error(e),
+      (e, i) => this.onPressMenu(i)
+    )
   }
 
   onOpenMenu = () => {
-    const options = [ 'Edit', 'Delete' ]
-
-    Platform.select({
-      ios: this.showActionSheet(options),
-      android: this.showPopupMenu(options)
-    })
+    Platform.OS === 'ios' ?
+      this.showActionSheet() :
+      this.showPopupMenu()
   }
 
   render() {
@@ -98,7 +111,11 @@ export class NoteListItem extends Component {
           </View>
         </View>
         <Text style={styles.name}>{text}</Text>
-        <MoreButton ref={ref => this._buttonRef = ref} style={styles.button} onPress={this.onOpenMenu} />
+        <MenuButton
+          style={styles.button}
+          ref={ref => this._buttonRef = ref}
+          onPress={this.onOpenMenu}
+        />
       </View>
     )
   }
