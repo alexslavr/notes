@@ -26,8 +26,8 @@ export class NoteDetail extends PureComponent {
     return (
       <View style={styles.note}>
         <TextInput
-          style={styles.noteText}
           multiline
+          style={styles.noteText}
           value={noteText}
           placeholder="Type note text here ..."
           underlineColorAndroid="transparent"

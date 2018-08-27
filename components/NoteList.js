@@ -1,12 +1,19 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types'
 import { NoteType } from './propTypes'
-import { Alert, View, SwipeableFlatList } from 'react-native';
+import { Alert, View, SwipeableFlatList, StyleSheet } from 'react-native';
 import { NoteListItem } from './NoteListItem'
 import { RemoveButton } from './Buttons'
 import { MAX_SWIPE_DISTANCE } from "../constants";
 
-export class NoteList extends Component {
+const styles = StyleSheet.create({
+  quickActions: {
+    flex: 1,
+    alignItems: 'flex-end'
+  }
+})
+
+export class NoteList extends PureComponent {
   static propTypes = {
     notes: PropTypes.arrayOf(NoteType),
     onRemoveNote: PropTypes.func,
@@ -25,7 +32,7 @@ export class NoteList extends Component {
   }
 
   renderQuickActions = ({ item }) => (
-    <View style={{ flex: 1, alignItems: 'flex-end' }}>
+    <View style={styles.quickActions}>
       <RemoveButton onPress={() => this.onRemoveNote(item.id)} />
     </View>
   )

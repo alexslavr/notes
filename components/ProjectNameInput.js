@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types'
 import { View, TextInput, StyleSheet } from 'react-native';
 
@@ -15,9 +15,16 @@ const styles = StyleSheet.create({
   }
 })
 
-export class ProjectNameInput extends Component {
+export class ProjectNameInput extends PureComponent {
+  static propTypes = {
+    onSubmitEditing: PropTypes.func
+  }
+
+  onSubmitEditing = e => {
+    this.props.onSubmitEditing(e.nativeEvent.text)
+  }
+
   render() {
-    const { onSubmitEditing } = this.props
     return (
       <View style={styles.container}>
         <TextInput
@@ -25,7 +32,7 @@ export class ProjectNameInput extends Component {
           placeholder="Type project name here ..."
           placeholderTextColor="gray"
           underlineColorAndroid="transparent"
-          onSubmitEditing={e => onSubmitEditing(e.nativeEvent.text)} />
+          onSubmitEditing={this.onSubmitEditing} />
       </View>
     )
   }

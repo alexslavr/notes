@@ -44,7 +44,11 @@ export class Project extends PureComponent {
     const { projectId, project } = this.props
 
     if (!projectId || !project) {
-      return (<ProjectNameInput onSubmitEditing={this.createProject} />)
+      return (
+        <ProjectNameInput
+          onSubmitEditing={this.createProject}
+        />
+      )
     }
 
     return (
@@ -59,8 +63,8 @@ export class Project extends PureComponent {
 
 const mapStateToProps = (state, ownProps) => {
   const projectId = ownProps.navigation.getParam('projectId', null)
-
   let project = null
+
   if (projectId) {
     project = state.projects.find(project => projectId === project.id)
   }

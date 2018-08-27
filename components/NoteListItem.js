@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types'
 import { NoteType } from './propTypes'
 import {
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   }
 })
 
-export class NoteListItem extends Component {
+export class NoteListItem extends PureComponent {
   static propTypes = {
     note: NoteType,
     onRemoveNote: PropTypes.func,
