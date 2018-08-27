@@ -1,6 +1,6 @@
 const currentUser = {
   userName: 'Alex Lavrov',
-  avatar: require('../images/avatar.jpeg'),
+  avatar: require('../images/avatar_1.jpg'),
 }
 
 export const actionTypes = {

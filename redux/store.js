@@ -1,7 +1,8 @@
 import { createStore } from 'redux'
 import { reducer } from './reducer'
 
-const userAvatar = require('../images/avatar.jpeg')
+const avatar_2 = require('../images/avatar_2.jpg')
+const avatar_3 = require('../images/avatar_3.jpg')
 
 export const initialState = {
   projects: [
@@ -12,21 +13,21 @@ export const initialState = {
         {
           id: '1',
           userName: 'Alex',
-          avatar: userAvatar,
+          avatar: avatar_2,
           editTime: '11-11-2011',
           text: 'Some text here'
         },
         {
           id: '2',
           userName: 'Alex',
-          avatar: userAvatar,
+          avatar: avatar_3,
           editTime: '11-11-2011',
           text: 'Test \n\n text \n\n here'
         },
         {
           id: '3',
           userName: 'Alex',
-          avatar: userAvatar,
+          avatar: avatar_2,
           editTime: '11-11-2011',
           text: 'Test text Test textTest textTest textTest textTest textTest textTest textTest textTest textTest text'
         }
@@ -39,7 +40,7 @@ export const initialState = {
         {
           id: '1',
           userName: 'Alex',
-          avatar: userAvatar,
+          avatar: avatar_3,
           editTime: '11-11-2011',
           text: 'asdfdasfsadf sadfsadf asdfsad sadfas'
         }
