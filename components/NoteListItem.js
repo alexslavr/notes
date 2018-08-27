@@ -68,7 +68,7 @@ export class NoteListItem extends Component {
   }
 
   showActionSheet = options => {
-    ActionSheetIOS.showActionSheetWithOptions(options, this.onPressMenu)
+    ActionSheetIOS.showActionSheetWithOptions({ options, destructiveButtonIndex: 1 }, this.onPressMenu)
   }
 
   showPopupMenu = options => {
