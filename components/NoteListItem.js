@@ -102,11 +102,10 @@ export class NoteListItem extends PureComponent {
     )
   }
 
-  onOpenMenu = () => {
-    Platform.OS === 'ios' ?
-      this.showActionSheet() :
-      this.showPopupMenu()
-  }
+  onOpenMenu = Platform.select({
+    android: this.showPopupMenu,
+    ios: this.showActionSheet
+  })
 
   render() {
     const { userName, avatar, editTime, text } = this.props.note
