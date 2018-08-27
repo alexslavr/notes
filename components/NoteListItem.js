@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   title: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 15
+    marginBottom: 10
   },
 
   avatar: {
@@ -43,6 +43,16 @@ const styles = StyleSheet.create({
 
   name: {
     fontSize: 16
+  },
+
+  time: {
+    fontSize: 14,
+    opacity: 0.8
+  },
+
+  text: {
+    fontSize: 16,
+    color: '#222222'
   },
 
   button: {
@@ -107,10 +117,10 @@ export class NoteListItem extends PureComponent {
           <Image style={styles.avatar} source={avatar} />
           <View style={styles.info}>
             <Text style={styles.name}>{userName}</Text>
-            <Text style={styles.name}>{editTime}</Text>
+            <Text style={styles.time}>{editTime}</Text>
           </View>
         </View>
-        <Text style={styles.name}>{text}</Text>
+        <Text style={styles.text}>{text}</Text>
         <MenuButton
           style={styles.button}
           ref={ref => this._buttonRef = ref}

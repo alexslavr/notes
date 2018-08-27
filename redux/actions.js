@@ -1,7 +1,4 @@
-const currentUser = {
-  userName: 'Alex Lavrov',
-  avatar: require('../images/avatar_1.jpg'),
-}
+import { currentUser } from './testData'
 
 export const actionTypes = {
   PROJECT_ADDED: 'PROJECT_ADDED',
@@ -29,8 +26,7 @@ export const actions = {
       projectId,
       note: {
         id: noteId,
-        userName: currentUser.userName,
-        avatar: currentUser.avatar,
+        ...currentUser,
         editTime: new Date().toDateString(),
         text
       }
@@ -43,8 +39,7 @@ export const actions = {
       projectId,
       note: {
         id: noteId,
-        userName: currentUser.userName,
-        avatar: currentUser.avatar,
+        ...currentUser,
         editTime: new Date().toDateString(),
         text
       }
