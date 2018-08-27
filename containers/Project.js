@@ -8,16 +8,16 @@ import { bindActionCreators } from 'redux'
 import { actions } from '../redux/actions'
 
 export class Project extends PureComponent {
-  static navigationOptions = ({ navigation }) => ({
-    title: navigation.getParam('name', ''),
-    headerRight: (
-      <AddButton onPress={navigation.getParam('onRightButtonPress')} />
-    )
-  })
-
-  addNote = () => {
-    const { projectId, addNote } = this.props
-    addNote(projectId, shortid.generate())
+  static navigationOptions = ({ navigation }) => {
+    const projectId = navigation.getParam('projectId')
+    return {
+      title: navigation.getParam('name', ''),
+      headerRight: (
+        <AddButton
+          onPress={() => navigation.navigate('Note', { projectId })}
+        />
+      )
+    }
   }
 
   removeNote = noteId => {
@@ -36,14 +36,10 @@ export class Project extends PureComponent {
     this.props.addProject(newProjectId, name)
   }
 
-  componentDidMount() {
-    this.props.navigation.setParams({ onRightButtonPress: this.addNote })
-  }
-
   render() {
     const { projectId, project } = this.props
 
-    if (!projectId || !project) {
+    if (!projectId) {
       return (
         <ProjectNameInput
           onSubmitEditing={this.createProject}
@@ -63,11 +59,9 @@ export class Project extends PureComponent {
 
 const mapStateToProps = (state, ownProps) => {
   const projectId = ownProps.navigation.getParam('projectId', null)
-  let project = null
-
-  if (projectId) {
-    project = state.projects.find(project => projectId === project.id)
-  }
+  const project = projectId ?
+    state.projects.find(project => projectId === project.id) :
+    null
 
   return {
     projectId,

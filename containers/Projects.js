@@ -8,31 +8,22 @@ import { actions } from '../redux/actions'
 export class Projects extends PureComponent {
   static navigationOptions = ({ navigation }) => ({
     headerRight: (
-      <AddButton
-        onPress={navigation.getParam('onHeaderButtonPress')}
-      />
+      <AddButton onPress={() => navigation.navigate('Project')} />
     )
   })
 
-  componentDidMount() {
-    this.props.navigation.setParams({
-      onHeaderButtonPress: this.navigateNewProject
+  navigateProject = project => {
+    this.props.navigation.navigate('Project', {
+      projectId: project.id,
+      name: project.name
     })
-  }
-
-  navigateNewProject = () => {
-    this.props.navigation.navigate('Project')
-  }
-
-  navigateExistingProject = (project) => {
-    this.props.navigation.navigate('Project', { projectId: project.id, name: project.name })
   }
 
   render() {
     return (
       <ProjectList
         projects={this.props.projects}
-        onPressProject={this.navigateExistingProject}
+        onPressProject={this.navigateProject}
       />
     )
   }

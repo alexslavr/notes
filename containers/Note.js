@@ -1,3 +1,4 @@
+import shortId from 'shortid'
 import React, { PureComponent } from 'react';
 import { Keyboard } from 'react-native'
 import { NoteDetail } from '../components/NoteDetail'
@@ -8,9 +9,8 @@ import { actions } from '../redux/actions'
 
 export class Note extends PureComponent {
   static navigationOptions = ({ navigation }) => ({
-    title: navigation.getParam('name', ''),
     headerRight: (
-      <SaveButton onPress={navigation.getParam('onSaveButtonPress')} />
+      <SaveButton onPress={navigation.getParam('onSaveNote')} />
     )
   })
 
@@ -19,17 +19,22 @@ export class Note extends PureComponent {
   }
 
   componentDidMount() {
-    this.props.navigation.setParams({ onSaveButtonPress: this.onSaveNote })
+    this.props.navigation.setParams({ onSaveNote: this.onSaveNote })
   }
 
   onSaveNote = () => {
-    const { projectId, note, editNote } = this.props
+    Keyboard.dismiss()
+
+    const { projectId, noteId, note, navigation, addNote, editNote } = this.props
     const { noteText } = this.state
 
-    if (noteText && noteText !== note.text) {
-      editNote(projectId, note.id, noteText)
+    if (!noteId) {
+      const newNoteId = shortId.generate()
+      navigation.setParams({ noteId: newNoteId })
+      addNote(projectId, newNoteId, noteText)
+    } else if (noteText && noteText !== note.text) {
+      editNote(projectId, noteId, noteText)
     }
-    Keyboard.dismiss()
   }
 
   onChangeNote = noteText => {
@@ -37,7 +42,10 @@ export class Note extends PureComponent {
   }
 
   render() {
-    const noteText = this.state.noteText || this.props.note.text
+    const initialTextValue = this.props.note ?
+      this.props.note.text : ''
+    const noteText = this.state.noteText || initialTextValue
+
     return (
       <NoteDetail
         noteText={noteText}
@@ -48,9 +56,16 @@ export class Note extends PureComponent {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { noteId, projectId } = ownProps.navigation.state.params
-  const project = state.projects.find(project => project.id === projectId)
-  const note = project.notes.find(note => note.id === noteId)
+  const projectId = ownProps.navigation.getParam('projectId')
+  const noteId = ownProps.navigation.getParam('noteId', null)
+
+  const project = projectId ?
+    state.projects.find(project => project.id === projectId) :
+    null
+
+  const note = project ?
+    project.notes.find(note => note.id === noteId) :
+    null
 
   return {
     noteId,
